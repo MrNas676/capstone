@@ -1,0 +1,93 @@
+<div class="bg" style=" width: 500px; margin-left: 400px; margin-top: 30px;">
+    <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'" nzTip="Working...">
+        <h1 style="margin-left: 160px;">Transaction</h1>
+        <div class="parent">
+            <div class="child">
+
+                <form nz-form [formGroup]="validateForm" class="login-form">
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="0" nzFor="FromAccount">From Account</nz-form-label>
+                        <nz-form-control [nzSpan]="25" nzErrorTip="This Input Is Required!">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select An Account"
+                                formControlName="fromAccount">
+                                <nz-option *ngFor="let fromAccount of FROMACCOUNT" nzLabel={{fromAccount}}
+                                    nzValue={{fromAccount}}></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="0" nzFor="ToAccount">To Account</nz-form-label>
+                        <nz-form-control [nzSpan]="25" nzErrorTip="This Input Is Required!">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select An Account"
+                                formControlName="toAccount">
+                                <nz-option *ngFor="let toAccount of TOACCOUNT" nzLabel={{toAccount}}
+                                    nzValue={{toAccount}}></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="0" nzFor="amount">Amount</nz-form-label>
+                        <nz-form-control [nzSpan]="25" nzErrorTip="This Input Is Required!">
+                            <input type="number" nz-input placeholder="Amount" formControlName="amount" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="0" nzFor="name">Reason</nz-form-label>
+                        <nz-form-control [nzSpan]="25" nzErrorTip="This Input Is Required!">
+                            <input type="text" nz-input placeholder="Reason (Optional)" formControlName="reason" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="0" nzFor="type">Type</nz-form-label>
+                        <nz-form-control [nzSpan]="25" nzErrorTip="This Input Is Required!">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select type" formControlName="type">
+                                <nz-option *ngFor="let type of TYPE" nzLabel={{type}} nzValue={{type}}></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                </form>
+                <button nz-button class="login-form-button login-form-margin" [disabled]="validateForm.invalid"
+                    (click)="postTransaction()" [nzType]="'primary'">Transaction</button>
+            </div>
+        </div>
+    </nz-spin>
+</div>
+
+<div *ngIf="response">
+    <div class="col-md-8" id="htmlData">
+        <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'" nzTip="Working...">
+            <nz-table #basicTable [nzData]="response" [nzPageSize]="20" [nzShowPagination]="'false'">
+                <thead>
+                    <tr>
+                        <th style="font-weight: bolder; color: #003973;">ID</th>
+                        <th style="font-weight: bolder; color: #003973;">From Account</th>
+                        <th style="font-weight: bolder; color: #003973;">To Account</th>
+                        <th style="font-weight: bolder; color: #003973;">Date</th>
+                        <th style="font-weight: bolder; color: #003973;">Amount</th>
+                        <th style="font-weight: bolder; color: #003973;">Reason</th>
+                        <th style="font-weight: bolder; color: #003973;">Type</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{response.id}}</td>
+                        <td>{{response.fromAccount}}</td>
+                        <td>{{response.toAccount}}</td>
+                        <td>{{response.date | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{response.amount}}</td>
+                        <td>{{response.reason}}</td>
+                        <td>{{response.type}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </nz-spin>
+    </div>
+    <button nz-button style="width: 150px; margin-left: 50px;" [nzType]="'primary'" (click)="openPDF()">PDF</button>
+</div>
